@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    #根据环境进行切换，local本机，prod公司环境 ...待扩展
+    active: local
+  servlet:
+    multipart:
+      #设置单个文件上传大小
+      max-file-size: 100MB
+      #设置总上传的数据大小
+      max-request-size: 500MB
+#####mybatis###配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.iflytek.risk.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: true
+#mybatis热加载
+mybatis-refresh:
+  enable: true
+  delaySeconds: 5
+  sleepSeconds: 3
+  mappingPath: risk
+#逻辑删除配置
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  type-enums-package: com.iflytek.risk.enums
+#引入日志配置文件
+#=====================================  log  =============================
+logging:
+  level:
+    com.baomidou.mybatisplus.samples.pagination: debug
+debug: false
+

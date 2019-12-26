@@ -1,0 +1,97 @@
+## 项目配置
+server:
+  port: 9071
+  servlet:
+    context-path: /lawrisk
+################################数据库配置-start###############################
+spring:
+  datasource:
+    name: lzda_db
+    url: jdbc:p6spy:mysql://localhost:3306/fwfx_db?useUnicode=true&useSSL=false&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  ###邮件发送
+  mail:
+    default-encoding: UTF-8
+    # 邮箱地址
+    host: smtp.163.com
+    # 邮箱用户名
+    username: 15855172401@163.com
+    # 授权码
+    password: hzq15855172401
+    # 协议
+    protocol: smtp
+    # 端口号 不通使用465
+    port: 25
+    title: 来自法务风险管理系统--待办提醒
+    emailSuffix: iflytek.com
+################################数据库配置-end#################################
+
+################################FastDFS参数-start###############################
+fastdfs:
+  connect_timeout_in_seconds: 20
+  network_timeout_in_seconds: 30
+  charset: UTF-8
+  http_tracker_http_port: 8888
+  tracker_servers: 192.168.58.50:22122
+  http_anti_steal_token: no
+  http_secret_key: FastDFS1234567890
+  previewFileTempPath: /iflytek/fwfx/
+################################FastDFS-end#################################
+
+################################SSO配置参数-start###############################
+## sso服务端测试地址
+sso:
+  ##是否开启sso认证，true开启，false关闭
+  enable: true
+  ssoUrl: https://ssoqxb.iflytek.com:8443/sso
+  ## sso服务端生产地址
+  ## sso.ssoUrl=https://sso.iflytek.com:8443/sso
+  ## 业务系统地址，可为空，配置值为登录成功后跳到此处指定地址 不配置仍返回原请求地址
+  clientUrl: http://10.0.10.81:8080/
+  ## 不验证登录路径   逗号隔开
+  excludeUrl: /resources/**,/logout,/interface/casesAdd,/interface/casesNoneAdd,/swagger-ui.html
+  loginUrl: /risk/index/login
+  ##  登录状态监测时间间隔  单位s
+  refreshInterval: 10
+  #证书路径（classpath下）
+  keystorePath: /iflytek/fwfx/sso/sso.keystore
+  keystorePwd: iflytek
+  isClassPath: false
+################################SSO配置参数-end#################################
+
+################################外部对接接口地址-start#################################
+interfaceUrl:
+  uap: http://172.31.199.65:10003/exchange-uap-service/uap
+  ps: http://172.31.0.93:8085/platForm/restPost
+#app主键
+appCode: lawrisk
+#管理员角色id
+adminRoleId: bb2e5671-22f0-4c63-8205-22d6ac9f0fba
+#流程编号
+flowNo: XJFLSW-
+################################外部对接接口地址-end###################################
+################################文件导出配置-start###################################
+file:
+  direction: /templates/
+  template:
+    nonLitigationCases: 流程编号,申请日期,申请人,纠纷发生法人主体,业务所在部门,对方名称,金额,纠纷类型,服务类型,服务人员,协作人员,是否外聘律师,律所名称,律师姓名,是否产生费用,费用总额,保全费,代理费,其他费用,案件简介,诉求,风险等级,案件分析,初步处理/答复意见,案件进展,回款/减损金额,案件小结,案件复盘,案件状态
+#    litigationCases: (流程编号,申请日期,申请人,纠纷发生法人主体,业务所在部门,对方名称,金额,案件类型,纠纷类型,服务类型,服务人员,协作人员,诉求,案件简介,是否外聘律师,律所名称,律师姓名,是否产生费用,费用总额,保全费,诉讼费,代理费,其他费用,风险等级)立案受理时间,开庭时间,审理机构,案件分析,初步处理/答复意见,案件进展(回款/减损金额,案件小结,案件复盘,结案方式)
+    litigationCases: 流程编号,申请日期,申请人,纠纷发生法人主体,业务所在部门,对方名称,金额,案件类型,纠纷类型,服务类型,服务人员,协作人员,诉求,案件简介,是否外聘律师,律所名称,律师姓名,是否产生费用,费用总额,保全费,诉讼费,代理费,其他费用,风险等级;审理信息1,审理信息2,审理信息3,审理信息4,审理信息5,审理信息6;(审理程序,立案受理时间,开庭时间,审理机构,案件分析,初步处理/答复意见,案件进展);回款/减损金额,案件小结,案件复盘,结案方式
+    risk: 登记日期,风险发生法人主体,业务部门,风险等级,风险类型,服务人员,协作人员,风险事项,风险分析,初步应对策略,事件进展,总结/复盘
+################################文件导出配置-end#####################################
+
+################################线程池配置-start#####################################
+pool:
+  # 定时任务线程次
+  schedule: 10
+
+################################线程池配置-end#######################################
+################################不记录系统日志链接start#####################################
+systemlog:
+  noLogurl: /risk/system/downFastDFSFile,/risk/system/downFile
+  deleteLog:
+    corn: 0 0 2 * * ?
+    month: 1
+################################不记录系统日志链接end#####################################
