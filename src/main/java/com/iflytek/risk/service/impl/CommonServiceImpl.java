@@ -10,6 +10,8 @@ import org.apache.ibatis.logging.LogFactory;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -38,6 +40,7 @@ public class CommonServiceImpl implements ICommonService {
     private static StorageServer storageServer;
     private static StorageClient storageClient;
     protected Log log = LogFactory.getLog(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonServiceImpl.class);
 
     @Value("${fastdfs.connect_timeout_in_seconds}")
     private String connectTimeout;
@@ -198,6 +201,8 @@ public class CommonServiceImpl implements ICommonService {
      */
     private void init() {
         try {
+            LOGGER.info("fastdfs.http_tracker_http_port：" + this.trackerHttpPort);
+            LOGGER.info("fastdfs.tracker_servers" + this.trackerServerIp);
             Properties properties = new Properties();
             properties.setProperty("fastdfs.connect_timeout_in_seconds", this.connectTimeout);
             properties.setProperty("fastdfs.network_timeout_in_seconds", this.networkTimeout);

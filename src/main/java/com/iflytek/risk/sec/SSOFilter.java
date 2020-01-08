@@ -213,7 +213,7 @@ public class SSOFilter implements Filter {
      * 获取是否记录系统日志标志
      */
     private boolean getSystemLogFlag(HttpServletRequest request) {
-        if(request == null){
+        if (request == null) {
             return false;
         }
         //过滤不记录系统日志请求
@@ -267,7 +267,8 @@ public class SSOFilter implements Filter {
     }
 
     private boolean isLogin(HttpServletRequest request) throws IOException {
-        String ip = StringUtils.isEmpty(request.getHeader("x-forwarded-for")) ? request.getRemoteAddr() : request.getHeader("x-forwarded-for");
+//        String ip = StringUtils.isEmpty(request.getHeader("x-forwarded-for")) ? request.getRemoteAddr() : request.getHeader("x-forwarded-for");
+        String ip = getIpAddr(request);
         LOGGER.info("isLogin ip：" + ip);
         String browser = request.getHeader("User-Agent");
         LOGGER.info("browser：" + browser);
@@ -287,6 +288,28 @@ public class SSOFilter implements Filter {
         } else {
             return false;
         }
+    }
+
+    private String getIpAddr(HttpServletRequest request) {
+        String ip = request.getHeader("x-forward-for");//负载均衡下为小写
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Forwarded-For");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        if (StringUtils.isNotEmpty(ip) && ip.contains(", ")) {
+            return ip.split(", ")[0];
+        }
+
+        return ip;
     }
 
     private String getSSOServiceUrl(HttpServletRequest request) {

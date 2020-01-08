@@ -1,7 +1,7 @@
 spring:
   profiles:
-    #根据环境进行切换，local本机，prod公司环境 ...待扩展
-    active: local
+    #根据环境进行切换，local本机，prod正式环境，company测试环境 ...待扩展
+    active: company
   servlet:
     multipart:
       #设置单个文件上传大小

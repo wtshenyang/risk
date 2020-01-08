@@ -164,7 +164,7 @@ public abstract class Hzq {
      * @param date  : 时间点
      * @return
      */
-    public static String getCron(java.util.Date date) {
+    public static String getCron(Date date) {
         String dateFormat = "ss mm HH dd MM ?";
         return formatDateByPattern(date, dateFormat);
     }

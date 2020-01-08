@@ -5,8 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 /**
  * @program: law-risk->TimeCleaning
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Component;
  * @author: 陈花梅
  * @create: 2019-12-26 15:12
  **/
-@Component
+@Configuration
+@EnableScheduling
 public class TimeCleaning {
     private static final Logger logger = LoggerFactory.getLogger(TimeCleaning.class);
 
@@ -24,7 +26,7 @@ public class TimeCleaning {
     @Autowired
     private ISystemLogService systemLogService;
 
-//    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void timeCleaning() {
         try {
             logger.error("[开始删除系统日志Log  " + deleteLogMonth + "  月前的数据]------");

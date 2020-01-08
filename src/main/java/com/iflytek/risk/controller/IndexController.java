@@ -68,16 +68,17 @@ public class IndexController {
         map.put("userInfo", ssoUser);
         map.put("dictionaryList", dictionaryService.base(new RequestBean("getAll", HandleEnum.GET_ALL, null, null, null), request).getData());
         // 获取用户信息
-        String userId = "";
-        Map<String, String> paramForGetUserDetail = new HashMap<String, String>();
-        paramForGetUserDetail.put("loginName", ssoUser.getAccountName());
-        Object userOriginData = JSONObject.parse(Hzq.doPost(uapRootUrl + UapUrlEnum.GET_USER_INFO_BY_LOGIN_NAME.getUrl(), paramForGetUserDetail));
-        boolean resultFlag2 = (boolean) ((JSONObject) userOriginData).get("result");
-        if (resultFlag2) {
-            JSONObject userDetail = (JSONObject) ((JSONObject) userOriginData).get("content");
-            map.put("userDetail", userDetail);
-            userId = (String) userDetail.get("id");
-        }
+        String userId = ssoUser.getUserId();
+         map.put("userDetail", "");
+//        Map<String, String> paramForGetUserDetail = new HashMap<String, String>();
+//        paramForGetUserDetail.put("loginName", ssoUser.getAccountName());
+//        Object userOriginData = JSONObject.parse(Hzq.doPost(uapRootUrl + UapUrlEnum.GET_USER_INFO_BY_LOGIN_NAME.getUrl(), paramForGetUserDetail));
+//        boolean resultFlag2 = (boolean) ((JSONObject) userOriginData).get("result");
+//        if (resultFlag2) {
+//            JSONObject userDetail = (JSONObject) ((JSONObject) userOriginData).get("content");
+//            map.put("userDetail", userDetail);
+//            userId = (String) userDetail.get("id");
+//        }
         // 获取应用基本信息
         String appId = "";
         Map<String, String> paramForGetApp = new HashMap<String, String>();

@@ -10,7 +10,10 @@ public enum UapUrlEnum {
     GET_APP_INFO_BY_APP_CODE("/app/getByAppCode", "POST", "提供根据应用编码获取应用信息服务"),
     GET_AUTH_BY_APP_ID_USER_ID("/auth/getByAppIdAndUserId", "POST", "提供根据应用Id和用户Id获取功能权限信息列表服务"),
     GET_SOURCE_BY_APP_ID_USER_ID("/resource/getByAppIdAndUserId", "POST", "提供根据应用Id和用户Id获取资源信息列表服务"),
-    GET_PS_PERSONS("/LegalManageSystem_20191121/getPersonData_rest_7720", "POST", "获取ps人员数据"),
+    //测试环境
+    //    GET_PS_PERSONS("/LegalManageSystem_20191121/getPersonData_rest_7720", "POST", "获取ps人员数据"),
+    //生成环境
+    GET_PS_PERSONS("/LegalManageSystem_20191226/getPersonData_rest_2116", "POST", "获取ps人员数据"),
     GET_USER_INFO_BY_ROLE_ID("/user/getByRoleId", "POST", "提供根据角色id获取用户信息列表服务"),
 
     ;

@@ -177,12 +177,12 @@ public class NonLitigationCasesServiceImpl extends ServiceImpl<NonLitigationCase
 //            );
 //        }
 
-        if (nonLitigationCases.getMoney() == null || BigDecimal.ZERO.equals(nonLitigationCases.getMoney())) {
-            return new ResponseBean(
-                    errorCode,
-                    "金额为空或金额为0"
-            );
-        }
+//        if (nonLitigationCases.getMoney() == null || BigDecimal.ZERO.equals(nonLitigationCases.getMoney())) {
+//            return new ResponseBean(
+//                    errorCode,
+//                    "金额为空或金额为0"
+//            );
+//        }
 
         if (StringUtils.isEmpty(nonLitigationCases.getCaseBrief())) {
             return new ResponseBean(
@@ -458,8 +458,9 @@ public class NonLitigationCasesServiceImpl extends ServiceImpl<NonLitigationCase
         //非管理员用户只能查看服务人员是自己的数据
         if (!isAdmin) {
             NonLitigationCases nonLitigationCases = this.getById(id);
+            String servicePersonal= nonLitigationCases.getServicePersonal();
             String currentSP = ssoUser.getName() + '(' + ssoUser.getAccountName() + ')';
-            if (!currentSP.equals(nonLitigationCases.getServicePersonal())) {
+            if (StringUtils.isEmpty(servicePersonal) || !servicePersonal.contains(currentSP)) {
                 return false;
             }
         }

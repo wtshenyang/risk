@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     name: lzda_db
-    url: jdbc:p6spy:mysql://10.0.11.63:3306/fwfx_db?useUnicode=true&useSSL=false&characterEncoding=utf8
+    url: jdbc:p6spy:mysql://localhost:3306/fwfx_db?useUnicode=true&useSSL=false&characterEncoding=utf8
     username: root
-    password: Fwfx!2019
+    password: root
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
   ###邮件发送
   mail:
@@ -49,7 +49,7 @@ sso:
   ## sso服务端生产地址
   ## sso.ssoUrl=https://sso.iflytek.com:8443/sso
   ## 业务系统地址，可为空，配置值为登录成功后跳到此处指定地址 不配置仍返回原请求地址
-  clientUrl: http://10.0.11.63:8080/
+  clientUrl: http://10.0.10.81:8080/
   ## 不验证登录路径   逗号隔开
   excludeUrl: /resources/**,/logout,/interface/casesAdd,/interface/casesNoneAdd,/swagger-ui.html
   loginUrl: /risk/index/login
@@ -77,6 +77,7 @@ file:
   direction: /templates/
   template:
     nonLitigationCases: 流程编号,申请日期,申请人,纠纷发生法人主体,业务所在部门,对方名称,金额,纠纷类型,服务类型,服务人员,协作人员,是否外聘律师,律所名称,律师姓名,是否产生费用,费用总额,保全费,代理费,其他费用,案件简介,诉求,风险等级,案件分析,初步处理/答复意见,案件进展,回款/减损金额,案件小结,案件复盘,案件状态
+#    litigationCases: (流程编号,申请日期,申请人,纠纷发生法人主体,业务所在部门,对方名称,金额,案件类型,纠纷类型,服务类型,服务人员,协作人员,诉求,案件简介,是否外聘律师,律所名称,律师姓名,是否产生费用,费用总额,保全费,诉讼费,代理费,其他费用,风险等级)立案受理时间,开庭时间,审理机构,案件分析,初步处理/答复意见,案件进展(回款/减损金额,案件小结,案件复盘,结案方式)
     litigationCases: 流程编号,申请日期,申请人,纠纷发生法人主体,业务所在部门,对方名称,金额,案件类型,纠纷类型,服务类型,服务人员,协作人员,诉求,案件简介,是否外聘律师,律所名称,律师姓名,是否产生费用,费用总额,保全费,诉讼费,代理费,其他费用,风险等级;审理信息1,审理信息2,审理信息3,审理信息4,审理信息5,审理信息6;(审理程序,立案受理时间,开庭时间,审理机构,案件分析,初步处理/答复意见,案件进展);回款/减损金额,案件小结,案件复盘,结案方式
     risk: 登记日期,风险发生法人主体,业务部门,风险等级,风险类型,服务人员,协作人员,风险事项,风险分析,初步应对策略,事件进展,总结/复盘
 ################################文件导出配置-end#####################################

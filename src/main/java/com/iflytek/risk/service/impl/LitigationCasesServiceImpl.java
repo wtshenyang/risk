@@ -177,12 +177,12 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
 //            );
 //        }
 
-        if (litigationCases.getMoney() == null || BigDecimal.ZERO.equals(litigationCases.getMoney())) {
-            return new ResponseBean(
-                    errorCode,
-                    "金额为空或金额为0"
-            );
-        }
+//        if (litigationCases.getMoney() == null || BigDecimal.ZERO.equals(litigationCases.getMoney())) {
+//            return new ResponseBean(
+//                    errorCode,
+//                    "金额为空或金额为0"
+//            );
+//        }
 
         if (StringUtils.isEmpty(litigationCases.getCaseBrief())) {
             return new ResponseBean(
@@ -470,7 +470,7 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
                 // 如果没有审理数据，则将之前的审理及其中的案件进展数据删除
                 QueryWrapper<HearInformation> queryHearWrapper = new QueryWrapper<HearInformation>();
                 queryHearWrapper.eq("relation_id", litigationCases.getId());
-                if(CollectionUtils.isNotEmpty(saveHearIds)) {
+                if (CollectionUtils.isNotEmpty(saveHearIds)) {
                     queryHearWrapper.notIn("id", saveHearIds);
                 }
                 List<HearInformation> deleteHearList = hearInformationService.list(queryHearWrapper);
@@ -520,8 +520,9 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
         //非管理员用户只能查看服务人员是自己的数据
         if (!isAdmin) {
             LitigationCases litigationCases = this.getById(id);
+            String servicePersonal = litigationCases.getServicePersonal();
             String currentSP = ssoUser.getName() + '(' + ssoUser.getAccountName() + ')';
-            if (!currentSP.equals(litigationCases.getServicePersonal())) {
+            if (StringUtils.isEmpty(servicePersonal) || !servicePersonal.contains(currentSP)) {
                 return false;
             }
         }
@@ -550,7 +551,7 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
         String id = (String) requestBean.getInfo();
         boolean flag = this.removeById(id);
         //2、删除提醒人员数据
-        if(flag){
+        if (flag) {
             QueryWrapper<RemindTodo> queryWrapper = new QueryWrapper<RemindTodo>();
             queryWrapper.eq("relation_id", id);
             remindTodoService.remove(queryWrapper);
@@ -570,7 +571,7 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
         List<String> ids = requestBean.getInfos();
         boolean flag = this.removeByIds(ids);
         //2、删除提醒人员数据
-        if(flag){
+        if (flag) {
             QueryWrapper<RemindTodo> queryWrapper = new QueryWrapper<RemindTodo>();
             queryWrapper.in("relation_id", ids);
             remindTodoService.remove(queryWrapper);
@@ -816,7 +817,7 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
                 numT = arr[i];
             }
             if (i == 2) {
-                childT = arr[i].substring(1,arr[i].length()-1);
+                childT = arr[i].substring(1, arr[i].length() - 1);
             }
             if (i == 3) {
                 t2 = arr[i];
@@ -980,7 +981,7 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
         }
 
         List<Map> maps = new ArrayList<>();
-        Map<String, List<com.iflytek.risk.entity.Dictionary>> cacheMap = new HashMap<>();
+        Map<String, List<Dictionary>> cacheMap = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for (LitigationCases litigationCases : litigationCasesList) {
             Map map = Hzq.beanToMap(litigationCases);
@@ -1088,7 +1089,7 @@ public class LitigationCasesServiceImpl extends ServiceImpl<LitigationCasesMappe
         StringBuffer sb = new StringBuffer();
         for (ProcessInformation processInformation : processInfos) {
             if (!StringUtils.isEmpty(processInformation.getContent())) {
-                sb.append(processInformation.getContent()+"  ");
+                sb.append(processInformation.getContent() + "  ");
             }
         }
 

@@ -12,6 +12,8 @@ import com.iflytek.risk.enums.CommonConstants;
 import com.iflytek.risk.enums.SystemMessageEnum;
 import com.iflytek.risk.mapper.SystemLogMapper;
 import com.iflytek.risk.service.ISystemLogService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -30,6 +32,7 @@ import java.util.Date;
  */
 @Service
 public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog> implements ISystemLogService {
+    private static final Logger logger = LoggerFactory.getLogger(SystemLogServiceImpl.class);
 
     /**
      * 公共基础方法
@@ -81,7 +84,9 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
         }
 
         QueryWrapper<SystemLog> queryWrapper = new QueryWrapper<SystemLog>();
-        queryWrapper.lt("request_time", rollMon(new Date(), month));
+        queryWrapper.lt("request_time", rollMon(new Date(), -month));
+        int count = this.count(queryWrapper);
+        logger.info("待删除系统日志条数：" + count);
         this.remove(queryWrapper);
     }
 

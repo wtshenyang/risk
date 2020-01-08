@@ -274,8 +274,9 @@ public class RiskServiceImpl extends ServiceImpl<RiskMapper, Risk> implements IR
         //非管理员用户只能查看服务人员是自己的数据
         if (!isAdmin) {
             Risk risk = this.getById(id);
+            String servicePersonal = risk.getServicePersonal();
             String currentSP = ssoUser.getName() + '(' + ssoUser.getAccountName() + ')';
-            if (!currentSP.equals(risk.getServicePersonal())) {
+            if (StringUtils.isEmpty(servicePersonal) || !servicePersonal.contains(currentSP)) {
                 return false;
             }
         }
@@ -546,7 +547,7 @@ public class RiskServiceImpl extends ServiceImpl<RiskMapper, Risk> implements IR
      */
     public List<Map> listToMap(List<Risk> list) {
         List<Map> maps = new ArrayList<Map>();
-        Map<String, List<com.iflytek.risk.entity.Dictionary>> cacheMap = new HashMap<String, List<Dictionary>>();
+        Map<String, List<Dictionary>> cacheMap = new HashMap<String, List<Dictionary>>();
         if (list != null && list.size() > 0) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             for (Risk risk : list) {
